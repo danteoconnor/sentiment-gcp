@@ -1,7 +1,9 @@
 from google.cloud import language
 import pandas as pd
 
-data = pd.read_csv("all-data.csv")
+data = pd.read_csv("all-data.csv", encoding="ISO-8859-1")
+
+data2 = data.columns[1]
 
 
 def analyze_text_sentiment(text):
