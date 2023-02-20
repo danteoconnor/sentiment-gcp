@@ -1,10 +1,14 @@
 from google.cloud import language
+from google.cloud import language_v1
+import six
 import pandas as pd
 
 data = pd.read_csv("all-data.csv", encoding="ISO-8859-1")
 
+data.columns = ['sentiment', 'text']
 data2 = data.columns[1]
 
+#This format data.loc[1].at['text'] can be used to access the data at that element
 
 def analyze_text_sentiment(text):
     client = language.LanguageServiceClient()
@@ -21,5 +25,30 @@ def analyze_text_sentiment(text):
     for k, v in results.items():
         print(f"{k:10}: {v}")
 
-text = "Guido van Rossum is great!"
-analyze_text_sentiment(text)
+
+def sample_analyze_sentiment(content):
+
+    client = language_v1.LanguageServiceClient()
+
+    # content = 'Your text to analyze, e.g. Hello, world!'
+
+    if isinstance(content, six.binary_type):
+        content = content.decode("utf-8")
+
+    type_ = language_v1.Document.Type.PLAIN_TEXT
+    document = {"type_": type_, "content": content}
+
+    response = client.analyze_sentiment(request={"document": document})
+    sentiment = response.document_sentiment
+    print("Score: {}".format(sentiment.score))
+    print("Magnitude: {}".format(sentiment.magnitude))
+
+
+
+for x in range(20):
+    val = data.loc[x].at['text']  #stores the data at that point in val
+    analyze_text_sentiment(val)
+
+
+#text = "Guido van Rossum is great!"
+#analyze_text_sentiment(text)
