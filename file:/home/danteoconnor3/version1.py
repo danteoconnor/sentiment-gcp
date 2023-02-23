@@ -44,10 +44,12 @@ def sample_analyze_sentiment(content):
     print("Magnitude: {}".format(sentiment.magnitude))
 
 
+text = "During the last quarter of 2016, the loans outpaced leases for the first time. Despite the significant market share, SolarCity’s solar panel installations during the first quarter declined around 39% year over year during the first quarter of 2017. The company has revealed sleek new solar roof panels that it claims are more efficient and cost-competitive compared to regular roofing products."
 
-for x in range(20):
-    val = data.loc[x].at['text']  #stores the data at that point in val
-    analyze_text_sentiment(val)
+analyze_text_sentiment(text)
+#for x in range(20):
+#    val = data.loc[x].at['text']  #stores the data at that point in val
+#    analyze_text_sentiment(val)
 
 
 #text = "Guido van Rossum is great!"
